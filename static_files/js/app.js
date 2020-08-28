@@ -19,8 +19,33 @@ $(document).ready(function(){
             </tr>`;
         });
         $('#myTable > tbody:last-child').append(rows);
-        }
+
+        $('.deleteBtn').on("click",function(){
+
+            deleteRoom($(this));
+        });
+    
+        
+    }
+
+        
     });
+
+  
 });
  
+
+
+function  deleteRoom(el){
+    roomId  =  $(el).attr('data-id');
+
+    $.ajax({
+        url:  `/rooms/delete/${roomId}`,
+        type:  'get',
+        dataType:  'json',
+        success:  function (data) {
+            $(el).parents()[1].remove()
+        }
+    });  
+}
 

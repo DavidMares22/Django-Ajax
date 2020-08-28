@@ -7,4 +7,5 @@ app_name = 'pages'
 urlpatterns = [
     path('',index, name="index"),
     path('rooms/list', views.RoomList.as_view(), name='room_list'),
+    path('rooms/delete/<int:pk>', views.RoomDelete.as_view(), name='room_delete'),
 ]

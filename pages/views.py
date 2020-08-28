@@ -12,3 +12,15 @@ class  RoomList(View):
         data =  dict()
         data['rooms'] = rooms
         return JsonResponse(data)
+
+
+class  RoomDelete(View):
+    def  get(self, request, pk):
+        data =  dict()
+        room = Room.objects.get(pk=pk)
+        if room:
+            room.delete()
+            data['message'] =  "Room deleted!"
+        else:
+            data['message'] =  "Error!"
+        return JsonResponse(data)
