@@ -15,7 +15,7 @@ class  RoomList(View):
 
 
 class  RoomDelete(View):
-    def  get(self, request, pk):
+    def  post(self, request, pk):
         data =  dict()
         room = Room.objects.get(pk=pk)
         if room:
