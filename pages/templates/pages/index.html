@@ -6,7 +6,8 @@
 {% block content %}
 
 <div class="message"></div>
-<table  class="table table-bordered"  id="myTable">
+<h1 class="page-header">Rooms</h1>
+<table  class="table table-bordered"  id="room-table">
     <thead>
         <th>
         Room Number
@@ -25,7 +26,7 @@
         </th>
     </thead>
     <tbody>
-        
+        {% include 'pages/includes/room_list.html' %}
     </tbody>
     </table>
     

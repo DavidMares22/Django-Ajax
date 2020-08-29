@@ -1,49 +1,7 @@
-$(document).ready(function(){
 
 
-getRooms();
-  
-});
 
-function deleteRows(){
-
-  $("tbody").empty();
-}
-
-function getRooms(){
-  $.ajax({
-    url:  '/rooms/list',
-    type:  'get',
-    dataType:  'json',
-    success: function  (data) {
-        let rows =  '';
-        data.rooms.forEach(room => {
-        rows += `
-        <tr>
-            <td>${room.room_number}</td>
-            <td>${room.name}</td>
-            <td>${room.nobeds}</td>
-            <td>${room.room_type}</td>
-            <td>
-                <button class="btn btn-danger deleteBtn" data-id="${room.id}">Delete</button>
-                <button class="btn btn-info updateBtn" data-id="${room.id}">Update</button>
-            </td>
-        </tr>`;
-    });
-    $('#myTable > tbody:last-child').append(rows);
-
-    $('.deleteBtn').on("click",function(){
-
-        deleteRoom($(this));
-    });
-
-    
-}
-
-    
-});
-
-}
+ 
 
 function getCookie(name) {
     var cookieValue = null;
@@ -64,27 +22,7 @@ function getCookie(name) {
 
 
 
-function  deleteRoom(el){
-    roomId  =  $(el).attr('data-id');
-    // console.log(getCookie('csrftoken'));
-
-    $.ajax({
-        url:  `/rooms/delete/${roomId}`,
-        data: {csrfmiddlewaretoken: getCookie('csrftoken')},
-        type:  'post',
-        dataType:  'json',
-        success:  function (data) {
-            // console.log(data);
-            $('.message').html(data.message);
-            $(".message").fadeTo(1000, 300).slideUp(300, function(){
-                $(".message").slideUp(300);
-            });
-
-            $(el).parents()[1].remove();
-            
-        }
-    });  
-}
+ 
 
 
 $("#modal-room").on("submit", ".js-room-create-form", function () {
@@ -96,9 +34,9 @@ $("#modal-room").on("submit", ".js-room-create-form", function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          // alert("Room created!");  // <-- This is just a placeholder for now for testing
-          deleteRows();
-          getRooms();
+        
+          $("#room-table tbody").html(data.html_room_list);  // <-- Replace the table body
+          $("#modal-room").modal("hide");
         }
         else {
           $("#modal-room .modal-content").html(data.html_form);
