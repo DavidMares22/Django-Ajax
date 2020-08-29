@@ -1,13 +1,17 @@
  {% for room in rooms %}
-        <tr>
-                <td>{{room.room_number}}</td>
-                <td>{{room.name}}</td>
-                <td>{{room.nobeds}}</td>
-                <td>{{room.room_type}}</td>
-                    
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="7" class="text-center bg-warning">No Room</td>
-        </tr>
+    <tr>
+      <td>{{room.room_number}}</td>
+      <td>{{room.name}}</td>
+      <td>{{room.nobeds}}</td>
+      <td>{{room.room_type}}</td>
+      <td>
+            <button type="button"
+                    class="btn btn-warning btn-sm js-update-room"
+                    data-url="{% url 'pages:room_update' room.id %}">Edit</button>
+      </td>                   
+    </tr>
+  {% empty %}
+    <tr>
+      <td colspan="7" class="text-center bg-warning">No Room</td>
+    </tr> 
 {% endfor %}

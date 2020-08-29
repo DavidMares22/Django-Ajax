@@ -1,18 +1,17 @@
-
-<form method="post" action="{% url 'pages:room_create' %}" class="js-room-create-form">
+<form method="post" action="{% url 'pages:room_update' form.instance.pk %}" class="js-room-update-form">
   {% csrf_token %}
   <div class="modal-header">
-  <h4 class="modal-title">Create a new Room</h4>
+  <h4 class="modal-title">Update room</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     
   </div>
   <div class="modal-body">
-   {% include 'pages/includes/room_form.html' %}
+  {% include 'pages/includes/room_form.html' %}
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Create room</button>
+    <button type="submit" class="btn btn-primary">Update room</button>
   </div>
 </form>
