@@ -5,6 +5,7 @@
 
 {% block content %}
 
+<div class="message"></div>
 <table  class="table table-bordered"  id="myTable">
     <thead>
         <th>
@@ -27,11 +28,18 @@
     </tbody>
     </table>
     
-    <div  id="roomform">
-        <button  id="createRoom"  class="btn btn-primary"> Create Room </button>
-    </div>
+    
+        <button class="btn btn-primary js-create-room"> Create Room </button>
+    
     
 
+    <div class="modal fade" id="modal-room">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+    
 
 {% endblock %}
 

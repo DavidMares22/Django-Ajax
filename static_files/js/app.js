@@ -65,8 +65,48 @@ function  deleteRoom(el){
         type:  'post',
         dataType:  'json',
         success:  function (data) {
-            $(el).parents()[1].remove()
+            // console.log(data);
+            $('.message').html(data.message);
+            $(".message").fadeTo(2000, 500).slideUp(500, function(){
+                $(".message").slideUp(500);
+            });
+
+            $(el).parents()[1].remove();
+            
         }
     });  
 }
 
+
+$("#modal-room").on("submit", ".js-room-create-form", function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          alert("Room created!");  // <-- This is just a placeholder for now for testing
+        }
+        else {
+          $("#modal-room .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  });
+
+  $(".js-create-room").click(function () {
+    $.ajax({
+      url: '/rooms/create',
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#modal-room").modal("show");
+      },
+      success: function (data) {
+        $("#modal-room .modal-content").html(data.html_form);
+      }
+    });
+  });
