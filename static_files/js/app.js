@@ -91,6 +91,7 @@ $("#modal-room").on("submit", ".js-room-create-form", function () {
         }
         else {
           $("#modal-room .modal-content").html(data.html_form);
+          console.log(data.form_is_valid)
         }
       }
     });
@@ -107,6 +108,7 @@ $("#modal-room").on("submit", ".js-room-create-form", function () {
       },
       success: function (data) {
         $("#modal-room .modal-content").html(data.html_form);
+        console.log(data);
       }
     });
   });

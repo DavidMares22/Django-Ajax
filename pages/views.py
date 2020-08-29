@@ -28,12 +28,32 @@ class  RoomDelete(View):
             data['message'] =  "Error!"
         return JsonResponse(data)
 
-def RoomCreate(request):
 
-    form = RoomForm()
+def RoomCreate(request):
+    data = dict()
+
+    if request.method == 'POST':
+        form = RoomForm(request.POST)
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = RoomForm()
+
     context = {'form': form}
-    html_form = render_to_string('pages/includes/create_room.html',
+    
+    data['html_form'] = render_to_string('pages/includes/create_room.html',
         context,
-        request=request,
+        request=request
     )
-    return JsonResponse({'html_form': html_form})
+    return JsonResponse(data)
+
+    # form = RoomForm()
+    # context = {'form': form}
+    # html_form = render_to_string('pages/includes/create_room.html',
+    #     context,
+    #     request=request,
+    # )
+    # return JsonResponse({'html_form': html_form})
