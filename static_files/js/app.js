@@ -15,6 +15,7 @@ $(function () {
       },
       success: function (data) {
         $("#modal-room .modal-content").html(data.html_form);
+        
       }
     });
   };
@@ -27,13 +28,17 @@ $(function () {
       type: form.attr("method"),
       dataType: 'json',
       success: function (data) {
+        // console.log(data);
         if (data.form_is_valid) {
 
           $("#room-table tbody").html(data.html_room_list); 
           $("#modal-room").modal("hide");          
+          
+          console.log(data);
         }
         else {
           $("#modal-room .modal-content").html(data.html_form);
+          
         }
       }
     });
@@ -47,4 +52,7 @@ $(function () {
 
   $("#room-table").on("click", ".js-update-room", loadForm);
   $("#modal-room").on("submit", ".js-room-update-form", saveForm);
+
+  $("#room-table").on("click", ".js-delete-room", loadForm);
+  $("#modal-room").on("submit", ".js-room-delete-form", saveForm);
 });

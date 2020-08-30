@@ -8,6 +8,9 @@
             <button type="button"
                     class="btn btn-warning btn-sm js-update-room"
                     data-url="{% url 'pages:room_update' room.id %}">Edit</button>
+            <button type="button"
+                          class="btn btn-danger btn-sm js-delete-room"
+                          data-url="{% url 'pages:room_delete' room.id %}">Delete</button>            
       </td>                   
     </tr>
   {% empty %}

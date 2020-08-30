@@ -45,3 +45,21 @@ def RoomUpdate(request, room_id):
     return save_room_form(request, form, 'pages/includes/update_room.html')
 
    
+
+def RoomDelete(request,room_id):
+    room = get_object_or_404(Room, pk=room_id)
+    data = dict()
+    if request.method == 'POST':
+        room.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        rooms = Room.objects.all()
+        data['html_room_list'] = render_to_string('pages/includes/room_list.html', {
+            'rooms': rooms
+        })
+    else:
+        context = {'room': room}
+        data['html_form'] = render_to_string('pages/includes/room_delete.html',
+            context,
+            request=request,
+        )
+    return JsonResponse(data)
