@@ -3,6 +3,27 @@ from .models import Room
 from django.http import JsonResponse
 from .forms import RoomForm
 from django.template.loader import render_to_string
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView
+from django.urls import reverse
+from django.contrib.auth.models import User
+
+
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__exact=username).exists()
+    }
+    return JsonResponse(data)
+
+class SignUpView(CreateView):
+    template_name = 'pages/signup.html'
+    form_class = UserCreationForm
+    def get_success_url(self):
+        return reverse('pages:index')
+
+
 
 def index(request):
     rooms = Room.objects.all()
