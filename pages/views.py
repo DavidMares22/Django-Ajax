@@ -1,14 +1,42 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Room
+from .models import Room,Post
 from django.http import JsonResponse
 from .forms import RoomForm
 from django.template.loader import render_to_string
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
+from django.views.generic import ListView
 from django.urls import reverse
 from django.contrib.auth.models import User
 
 
+class PostListView(ListView):
+    model = Post
+    template_name = 'pages/posts.html'
+
+
+
+ 
+        
+def like_post(request,post_id):
+    user = request.user
+    data = dict()
+    if request.method == 'POST':
+    
+        post = Post.objects.get(pk=post_id)
+        data['id'] = post_id
+        
+        if user in post.liked.all():
+            post.liked.remove(user)
+            data['status'] = 'like'
+            
+        else:
+            post.liked.add(user)
+            
+            data['status'] = 'Unlike'
+
+    return JsonResponse(data)
+        
 
 def validate_username(request):
     username = request.GET.get('username', None)
@@ -17,9 +45,10 @@ def validate_username(request):
     }
     return JsonResponse(data)
 
-class SignUpView(CreateView):
-    template_name = 'pages/signup.html'
+class SignUpView(CreateView):    
     form_class = UserCreationForm
+    template_name = 'pages/signup.html'
+    
     def get_success_url(self):
         return reverse('pages:index')
 

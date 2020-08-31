@@ -1,0 +1,15 @@
+{% extends 'pages/base.html' %}
+{% load static %}  
+
+
+
+{% block content %}
+<div id="posts">
+{% include 'pages/includes/post_list.html' %}
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script  src="{% static 'js/app3.js' %}"></script>
+{% endblock %}

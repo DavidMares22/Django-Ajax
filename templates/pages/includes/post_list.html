@@ -1,0 +1,18 @@
+{% for obj in object_list %}
+
+    <div class="card mt-3 p-3">
+    <p>{{obj.content}}</p>
+        <form action="{% url 'pages:like_post' obj.id   %}" method="post" id='{{obj.id}}' class="like-form">
+            {% csrf_token %}
+            
+            <button type="submit" class="btn btn-primary like-btn-{{obj.id}}">
+                    {% if request.user in obj.liked.all %}
+                    Unlike
+                    {% else %}
+                    Like
+                    {% endif %}
+            </button>
+        </form>
+    </div>
+
+{% endfor %}
