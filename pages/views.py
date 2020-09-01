@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Room,Post
 from django.http import JsonResponse
-from .forms import RoomForm
+from .forms import RoomForm,PostForm
 from django.template.loader import render_to_string
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
@@ -14,7 +14,31 @@ class PostListView(ListView):
     model = Post
     template_name = 'pages/posts.html'
 
+    def get_context_data(self, **kwargs):          
+        context = super().get_context_data(**kwargs)                             
+        context["form"] = PostForm()
+        return context    
 
+def create_post(request):
+    if request.method == 'POST':
+        post_text = request.POST.get('the_post')
+        response_data = {}
+
+        post = Post(content=post_text)
+        post.save()
+
+        response_data['result'] = 'Create post successful!'
+        response_data['postpk'] = post.pk
+        response_data['content'] = post.content
+        
+        
+
+        return JsonResponse(response_data)
+ 
+    else:
+
+        return JsonResponse({"nothing to see": "this isn't happening"})
+    
 
  
         

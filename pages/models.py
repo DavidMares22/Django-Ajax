@@ -17,7 +17,7 @@ class  Room(models.Model):
 
 
 class Post(models.Model):
-    content = models.TextField()
+    content = models.CharField(max_length=200)
     liked = models.ManyToManyField(User,blank=True)
 
     def __str__(self):

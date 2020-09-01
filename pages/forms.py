@@ -1,6 +1,17 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Room
+from .models import Room,Post
+
+
+class PostForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','id':'post-content','placeholder': 'Post text...'}))
+    class Meta:
+        model = Post
+        fields = ['content']
+ 
+
+      
+
 
 
 class  RoomForm(forms.ModelForm):

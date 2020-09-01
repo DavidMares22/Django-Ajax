@@ -4,6 +4,18 @@
 
 
 {% block content %}
+<div class="error-msg"></div>
+
+<form action="{% url 'pages:create_post' %}" method="POST" autocomplete="off" id="post-form">
+    {% csrf_token %}
+    <div class="input-group mb-3 ">
+        {% for field in form %}
+        {{ field }}
+        {% endfor %}        
+        <button type="submit" class="  btn btn-outline-primary">Send</button>
+    </div>
+</form>
+
 <div id="posts">
 {% include 'pages/includes/post_list.html' %}
 </div>
