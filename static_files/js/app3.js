@@ -1,34 +1,6 @@
 $(function () {
  
-    
-
-   
-   
-
-
-  $(".like-form").on("submit", function(){
-    
-    var form = $(this);
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-     
-
-        
-        $(".like-btn-"+data.id).html(data.status); 
-        
-     
-      }
-
-    });
-    return false;
-  });
-
-
-
+ 
   // Submit post on submit
 $('#post-form').on('submit', function(event){
 
@@ -44,8 +16,11 @@ $('#post-form').on('submit', function(event){
     // handle a successful response
     success : function(data) {
         $('#post-content').val(''); // remove the value from the input
-        console.log(data); // log the returned json to the console
-        console.log("success"); // another sanity check
+       
+        $('#posts').html(data.html_post_list); 
+
+        console.log(data)
+
     },
 
     // handle a non-successful response

@@ -22,18 +22,18 @@ class PostListView(ListView):
 def create_post(request):
     if request.method == 'POST':
         post_text = request.POST.get('the_post')
-        response_data = {}
+        data = {}
 
         post = Post(content=post_text)
         post.save()
+        object_list = Post.objects.all()
 
-        response_data['result'] = 'Create post successful!'
-        response_data['postpk'] = post.pk
-        response_data['content'] = post.content
-        
+        data['html_post_list'] = render_to_string('pages/includes/post_list.html', {
+                'object_list': object_list
+            },request = request)
         
 
-        return JsonResponse(response_data)
+        return JsonResponse(data)
  
     else:
 
