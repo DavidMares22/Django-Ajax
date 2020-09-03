@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Room,Post
-from django.http import JsonResponse
+from django.http import JsonResponse, QueryDict
 from .forms import RoomForm,PostForm
 from django.template.loader import render_to_string
 from django.contrib.auth.forms import UserCreationForm
@@ -39,7 +39,20 @@ def create_post(request):
 
         return JsonResponse({"nothing to see": "this isn't happening"})
     
+def delete_post(request):
+    if request.method == 'DELETE':
 
+        post = Post.objects.get(
+            pk=int(QueryDict(request.body).get('postpk')))
+
+        post.delete()
+
+        data = {}
+        data['msg'] = 'Post was deleted.'
+
+        return JsonResponse(data)
+    else:
+        return JsonResponse({"nothing to see": "this isn't happening"})
  
         
 def like_post(request,post_id):

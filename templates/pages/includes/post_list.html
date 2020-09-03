@@ -1,6 +1,10 @@
 {% for obj in object_list %}
 
-    <div class="card mt-3 p-3">
+    <div class="card mt-3 p-3 post-{{obj.id}}">
+    <a type="button" class="close p-4 pull-right delete-btn" id="{{obj.id}}" >
+            <span>&times;</span>
+        </a>
+
     <p>{{obj.content}}</p>
         <form action="{% url 'pages:like_post' obj.id   %}" method="post" id='{{obj.id}}' class="like-form">
             {% csrf_token %}
@@ -13,33 +17,12 @@
                     {% endif %}
             </button>
         </form>
+         
+        
+        
+        
     </div>
 
 {% endfor %}
 
-<script>
 
-$(function () {
- $(".like-form").on("submit", function(){
-    
-    var form = $(this);
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-     
-
-        
-        $(".like-btn-"+data.id).html(data.status); 
-        
-     
-      }
-
-    });
-    return false;
-  });
-
-});
-</script>

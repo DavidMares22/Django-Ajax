@@ -1,5 +1,54 @@
 $(function () {
  
+  console.log("hola");
+
+  $("#posts").on('click','.delete-btn' ,function(){
+    var post_id = $(this).attr('id');
+    console.log(post_id)
+    $.ajax({
+      url : "/delete_post/", // the endpoint
+      type : "DELETE", // http method
+      data : { postpk : post_id }, // data sent with the delete request
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken",$('input[name=csrfmiddlewaretoken]').val());
+    },
+      success : function(json) {
+          // hide the post
+        $('.post-'+post_id).hide(); // hide the post on success
+        console.log("post deletion successful");
+      },
+
+      error : function(xhr,errmsg,err) {
+          // Show an error
+          $('#results').html("<div class='alert-box alert radius' data-alert>"+
+          "Oops! We have encountered an error. <a href='#' class='close'>&times;</a></div>"); // add error to the dom
+          console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+      }
+  });
+     
+  });
+
+  $("#posts").on("submit",'.like-form', function(){
+     
+     var form = $(this);
+     $.ajax({
+       url: form.attr("action"),
+       data: form.serialize(),
+       type: form.attr("method"),
+       dataType: 'json',
+       success: function (data) {
+      
+ 
+         
+         $(".like-btn-"+data.id).html(data.status); 
+         
+      
+       }
+ 
+     });
+     return false;
+   });
+ 
  
   // Submit post on submit
 $('#post-form').on('submit', function(event){
