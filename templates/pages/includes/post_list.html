@@ -1,9 +1,13 @@
 {% for obj in object_list %}
 
     <div class="card mt-3 p-3 post-{{obj.id}}">
-    <a type="button" class="close p-4 pull-right delete-btn" id="{{obj.id}}" >
-            <span>&times;</span>
-        </a>
+
+    <div class="text-right">
+        <button type="button" class="close delete-btn" id="{{obj.id}}" >
+             <span aria-hidden="true">&times;</span>
+        </button>
+    </div> 
+    
 
     <p>{{obj.content}}</p>
         <form action="{% url 'pages:like_post' obj.id   %}" method="post" id='{{obj.id}}' class="like-form">
