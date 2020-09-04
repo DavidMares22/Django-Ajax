@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Room,Post
 from django.http import JsonResponse, QueryDict
-from .forms import RoomForm,PostForm
+from .forms import RoomForm,PostForm,CustomUserCreationForm
 from django.template.loader import render_to_string
-from django.contrib.auth.forms import UserCreationForm
+
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView
 from django.urls import reverse
@@ -83,7 +83,7 @@ def validate_username(request):
     return JsonResponse(data)
 
 class SignUpView(CreateView):    
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     template_name = 'pages/signup.html'
     
     def get_success_url(self):

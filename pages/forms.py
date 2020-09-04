@@ -1,6 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Room,Post
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
 
 
 class PostForm(forms.ModelForm):
@@ -32,3 +34,18 @@ class  RoomForm(forms.ModelForm):
             raise ValidationError("At least 3 characters!")
  
         return data
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        fields = ('username', 'password1', 'password2')
+        model = get_user_model()
+    
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username',
+                                                                'class': 'form-control',
+                                                                }))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password',
+                                                                    'class': 'form-control mb-4',
+                                                                    }))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password',
+                                                                'class': 'form-control mb-4',
+                                                                }))     
