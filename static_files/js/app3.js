@@ -1,6 +1,28 @@
 $(function () {
  
-  console.log("hola");
+  $("#search").keyup(function(){
+
+    $.ajax({
+      url: "/search_titles/",
+      data: {
+        'search_text':$('#search').val(),
+        'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val()
+      },
+      type: 'POST',
+      dataType: 'html',
+      success: function (data) {
+     
+
+        
+        $("#search-results").html(data); 
+        
+     
+      }
+
+    });
+
+
+  });
 
   $("#posts").on('click','.delete-btn' ,function(){
     var post_id = $(this).attr('id');

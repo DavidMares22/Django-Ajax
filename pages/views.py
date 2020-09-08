@@ -150,3 +150,15 @@ def RoomDelete(request,room_id):
             request=request,
         )
     return JsonResponse(data)
+
+
+
+def search_titles(request):
+    if request.method == "POST":
+        search_text = request.POST['search_text']
+    else:
+        search_text = ''
+
+    articles = Post.objects.filter(content__contains=search_text)
+
+    return render(request,'pages/ajax_search.html',{'articles':articles})

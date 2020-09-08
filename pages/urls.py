@@ -1,6 +1,6 @@
 from django.urls import path
 from pages import views
-from .views import index,RoomCreate,RoomUpdate,RoomDelete,like_post,create_post,delete_post
+from .views import index,RoomCreate,RoomUpdate,RoomDelete,like_post,create_post,delete_post,search_titles
 
 app_name = 'pages'
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path('like/<int:post_id>',like_post,name="like_post"),
     path('create_post/', create_post, name="create_post"),
     path('delete_post/', delete_post, name="delete_post"),
+    path('search_titles/', search_titles, name="search_titles"),
 ]

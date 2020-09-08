@@ -6,6 +6,20 @@
 {% block content %}
 <div class="error-msg"></div>
 
+<div class="row">
+
+<div class="col-sm-3">
+<h3>Search</h3>
+<input type="text" id="search" name="search">
+
+<ul id="search-results">
+
+</ul>
+
+</div>
+
+<div class="col-sm-9">
+
 <form action="{% url 'pages:create_post' %}" method="POST" autocomplete="off" id="post-form">
     {% csrf_token %}
     <div class="input-group mb-3 ">
@@ -19,6 +33,12 @@
 <div id="posts">
 {% include 'pages/includes/post_list.html' %}
 </div>
+
+</div>
+
+</div>
+
+
 {% endblock %}
 
 
