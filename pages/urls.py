@@ -10,6 +10,7 @@ urlpatterns = [
     path('rooms/<int:room_id>/update', RoomUpdate, name='room_update'),
     path('rooms/<int:room_id>/delete', RoomDelete, name='room_delete'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('signin/', views.signin, name='signin'),
     path('ajax/validate_username/', views.validate_username, name='validate_username'),
     path('posts/',views.PostListView.as_view(),name="list_posts"),
     path('like/<int:post_id>',like_post,name="like_post"),

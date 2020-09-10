@@ -22,4 +22,7 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def total_likes(self):
+        return self.liked.count()
     

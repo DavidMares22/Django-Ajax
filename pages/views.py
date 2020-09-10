@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Room,Post
 from django.http import JsonResponse, QueryDict
 from .forms import RoomForm,PostForm,CustomUserCreationForm
@@ -8,6 +8,8 @@ from django.views.generic.edit import CreateView
 from django.views.generic import ListView
 from django.urls import reverse
 from django.contrib.auth.models import User
+from .forms import UserLoginForm
+from django.contrib.auth import authenticate, login
 
 
 class PostListView(ListView):
@@ -89,7 +91,23 @@ class SignUpView(CreateView):
     def get_success_url(self):
         return reverse('pages:index')
 
-
+def signin(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('pages:list_posts')
+            else:
+                return redirect('pages:signin')
+    else:
+        form = UserLoginForm()
+    return render(request = request,
+                    template_name = "pages/signin.html",
+                    context={"form":form})
 
 def index(request):
     rooms = Room.objects.all()

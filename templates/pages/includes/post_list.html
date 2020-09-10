@@ -20,6 +20,10 @@
                     Like
                     {% endif %}
             </button>
+            {% with total=obj.total_likes %}
+            <small>{{ total }} like{{ total|pluralize }}</small>
+            {% endwith %}
+            
         </form>
          
         

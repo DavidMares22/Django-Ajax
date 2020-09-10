@@ -1,8 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Room,Post
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 
 class PostForm(forms.ModelForm):
@@ -48,4 +49,11 @@ class CustomUserCreationForm(UserCreationForm):
                                                                     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password',
                                                                 'class': 'form-control mb-4',
-                                                                }))     
+                                                                }))
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = User
+        fields = ['username','password']                                                                
