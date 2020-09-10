@@ -53,16 +53,17 @@ $(function () {
   $("#posts").on("submit",'.like-form', function(){
      
      var form = $(this);
+     var post_id = $(this).attr('id');
      $.ajax({
        url: form.attr("action"),
        data: form.serialize(),
        type: form.attr("method"),
-       dataType: 'json',
+       dataType: 'html',
        success: function (data) {
       
  
          
-         $(".like-btn-"+data.id).html(data.status); 
+        $(".post-"+post_id).replaceWith(data); 
          
       
        }

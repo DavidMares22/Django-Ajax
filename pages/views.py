@@ -59,22 +59,21 @@ def delete_post(request):
         
 def like_post(request,post_id):
     user = request.user
-    data = dict()
     if request.method == 'POST':
     
         post = Post.objects.get(pk=post_id)
-        data['id'] = post_id
+        
         
         if user in post.liked.all():
             post.liked.remove(user)
-            data['status'] = 'like'
+            
             
         else:
             post.liked.add(user)
             
-            data['status'] = 'Unlike'
+            
 
-    return JsonResponse(data)
+    return render(request,'pages/includes/single_post.html',{'obj':post})
         
 
 def validate_username(request):
