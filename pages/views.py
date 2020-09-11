@@ -5,7 +5,7 @@ from .forms import RoomForm,PostForm,CustomUserCreationForm
 from django.template.loader import render_to_string
 
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView
+from django.core.paginator import Paginator
 from django.urls import reverse
 from django.contrib.auth.models import User
 from .forms import UserLoginForm
@@ -18,14 +18,31 @@ def logout(request):
     return redirect('pages:signin')
 
 
-class PostListView(ListView):
-    model = Post
-    template_name = 'pages/posts.html'
+   
 
-    def get_context_data(self, **kwargs):          
-        context = super().get_context_data(**kwargs)                             
-        context["form"] = PostForm()
-        return context    
+
+def PostListView(request):
+
+    ctx = {}
+    posts = Post.objects.all()
+
+    page_number = request.GET.get('page')
+    paginator = Paginator(posts, 3)
+    object_list = paginator.get_page(page_number)
+
+    ctx['object_list'] = object_list
+
+    ctx['form'] = PostForm()
+
+    return render(request,'pages/posts.html',ctx)
+
+def pages(request):
+    posts = Post.objects.all()
+    page_number = request.GET.get('page')
+    paginator = Paginator(posts, 3)
+    object_list = paginator.get_page(page_number)
+    print(page_number)
+    return render(request,'pages/includes/post_list.html',{'object_list':object_list})
 
 def create_post(request):
     if request.method == 'POST':

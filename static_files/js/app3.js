@@ -125,6 +125,29 @@ $('#post-form').on('submit', function(event){
 });
 });
 
+
+
+
+$('#posts').on('click','.page-link',function(){
+
+
+ $.ajax({
+  url: "/pages/",
+  data: {page:$(this).attr('id')},
+  type: 'get',
+  dataType: 'html',
+  success: function (data) {
+ 
+
+    $('#posts').html(data); 
+    
+ 
+  }
+
+});
+
+});
+
  
 
 });

@@ -13,9 +13,10 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path("logout/", views.logout, name="logout"),
     path('ajax/validate_username/', views.validate_username, name='validate_username'),
-    path('posts/',views.PostListView.as_view(),name="list_posts"),
+    path('posts/',views.PostListView,name="list_posts"),
     path('like/<int:post_id>',like_post,name="like_post"),
     path('create_post/', create_post, name="create_post"),
     path('delete_post/', delete_post, name="delete_post"),
     path('search_titles/', search_titles, name="search_titles"),
+    path('pages/', views.pages, name="pages"),
 ]

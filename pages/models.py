@@ -26,3 +26,6 @@ class Post(models.Model):
     def total_likes(self):
         return self.liked.count()
     
+    class Meta:
+        ordering = ['-id']        
+    
