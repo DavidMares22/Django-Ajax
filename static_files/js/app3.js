@@ -1,7 +1,27 @@
 $(function () {
  
+  const delay_by_in_ms = 1000
+  let scheduled_function = false
+
   $("#search").keyup(function(){
 
+    
+
+    
+
+    if (scheduled_function) {
+      clearTimeout(scheduled_function)
+  }
+
+  
+  scheduled_function = setTimeout(ajax_call, delay_by_in_ms)
+
+    
+
+  });
+
+  let ajax_call = function(){
+    console.log($('#search').val());
     $.ajax({
       url: "/search_titles/",
       data: {
@@ -21,8 +41,7 @@ $(function () {
 
     });
 
-
-  });
+  }
 
   $("#posts").on('click','.delete-btn' ,function(){
     var post_id = $(this).attr('id');

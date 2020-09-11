@@ -20,13 +20,25 @@
 
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav ml-auto">
-            
+
+          {% if user.is_authenticated %}
+          <span class="navbar-text">
+            Welcome, {{user.username}} 
+          </span>
+          
+          <li class="nav-item">
+                  <a class="nav-link" href="{% url 'pages:logout' %}">Logout</a>
+              </li>
+          {% else %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'pages:signup' %}">Sign up</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'pages:signin' %}">Sign in</a>
               </li>
+            {% endif %}
+            
+             
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'pages:list_posts' %}">Posts</a>
               </li>

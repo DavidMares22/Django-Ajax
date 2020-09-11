@@ -12,9 +12,10 @@
     <p>{{obj.content}}</p>
         <form action="{% url 'pages:like_post' obj.id   %}" method="post" id='{{obj.id}}' class="like-form">
             {% csrf_token %}
-            
+
+                {% if user.is_authenticated %}
                     {% if request.user in obj.liked.all %}
-                    <button type="submit" class="btn btn-danger like-btn-{{obj.id}}">
+                    <button type="submit" class="btn btn-outline-primary like-btn-{{obj.id}}">
                     Unlike
                     </button>
                     {% else %}
@@ -22,7 +23,8 @@
                     Like
                     </button>
                     {% endif %}
-                    
+                {% endif %}
+
             {% with total=obj.total_likes %}
             <small>{{ total }} like{{ total|pluralize }}</small>
             {% endwith %}

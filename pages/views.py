@@ -10,6 +10,12 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from .forms import UserLoginForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout as do_logout
+
+
+def logout(request):
+    do_logout(request)
+    return redirect('pages:signin')
 
 
 class PostListView(ListView):

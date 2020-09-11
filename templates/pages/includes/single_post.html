@@ -13,7 +13,7 @@
             
             
                     {% if request.user in obj.liked.all %}
-                    <button type="submit" class="btn btn-danger like-btn-{{obj.id}}">
+                    <button type="submit" class="btn btn-outline-primary like-btn-{{obj.id}}">
                     Unlike
                     </button>
                     {% else %}
