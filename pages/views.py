@@ -5,12 +5,13 @@ from .forms import RoomForm,PostForm,CustomUserCreationForm
 from django.template.loader import render_to_string
 
 from django.views.generic.edit import CreateView
-from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.urls import reverse
 from django.contrib.auth.models import User
 from .forms import UserLoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as do_logout
+from django.http.response import HttpResponse
 
 
 def logout(request):
@@ -133,7 +134,23 @@ def signin(request):
 
 def index(request):
     rooms = Room.objects.all()
-    return render(request,'pages/index.html',{'rooms':rooms})
+    page_number = request.GET.get('page')
+    paginator = Paginator(rooms, 7)
+    try:
+        object_list = paginator.page(page_number)
+    except PageNotAnInteger:
+
+        object_list = paginator.page(1)
+    except EmptyPage:
+        if request.is_ajax():
+            print('empty')
+            return HttpResponse('')
+    
+    if request.is_ajax():
+        return render(request,
+        'pages/includes/room_list.html',
+        { 'rooms':object_list})    
+    return render(request,'pages/index.html',{'rooms':object_list})
 
 
 def RoomCreate(request):
