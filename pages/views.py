@@ -168,9 +168,28 @@ def save_room_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            rooms = Room.objects.all()
-            data['html_room_list'] = render_to_string('pages/includes/room_list.html', {
-                'rooms': rooms
+            room = Room.objects.latest('id')
+            data['html_room'] = render_to_string('pages/includes/single_room.html', {
+                'room': room
+            })
+        else:
+            data['form_is_valid'] = False
+
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)    
+
+def update_room_form(request, form, template_name,room_id):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            data['room_id'] = room_id
+            
+            room = Room.objects.get(id=room_id)
+            data['html_room'] = render_to_string('pages/includes/single_room.html', {
+                'room': room
             })
         else:
             data['form_is_valid'] = False
@@ -186,7 +205,7 @@ def RoomUpdate(request, room_id):
         form = RoomForm(request.POST, instance=room)
     else:
         form = RoomForm(instance=room)
-    return save_room_form(request, form, 'pages/includes/update_room.html')
+    return update_room_form(request, form, 'pages/includes/update_room.html',room_id)
 
    
 
@@ -196,10 +215,11 @@ def RoomDelete(request,room_id):
     if request.method == 'POST':
         room.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
-        rooms = Room.objects.all()
-        data['html_room_list'] = render_to_string('pages/includes/room_list.html', {
-            'rooms': rooms
-        })
+        # rooms = Room.objects.all()
+        data['room_id'] = room_id
+        # data['html_room_list'] = render_to_string('pages/includes/room_list.html', {
+        #     'rooms': rooms
+        # })
     else:
         context = {'room': room}
         data['html_form'] = render_to_string('pages/includes/room_delete.html',

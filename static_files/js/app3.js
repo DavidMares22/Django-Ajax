@@ -2,12 +2,15 @@ $(function () {
  
   const delay_by_in_ms = 1000
   let scheduled_function = false
+  $(".input-group-text").hide();
 
-  $("#search").keyup(function(){
+  $("#search-input").keyup(function(e){
 
-    
-
-    
+    var code = (e.keyCode || e.which);
+    if(code == 37 || code == 38 || code == 39 || code == 40) {
+      console.log(code);
+      return;
+    }
 
     if (scheduled_function) {
       clearTimeout(scheduled_function)
@@ -15,17 +18,17 @@ $(function () {
 
   
   scheduled_function = setTimeout(ajax_call, delay_by_in_ms)
-
+  $(".input-group-text").show();
     
 
   });
 
   let ajax_call = function(){
-    console.log($('#search').val());
+    
     $.ajax({
       url: "/search_titles/",
       data: {
-        'search_text':$('#search').val(),
+        'search_text':$('#search-input').val(),
         'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val()
       },
       type: 'POST',
@@ -35,7 +38,7 @@ $(function () {
 
         
         $("#search-results").html(data); 
-        
+        $(".input-group-text").hide();
      
       }
 

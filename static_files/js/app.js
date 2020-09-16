@@ -55,7 +55,7 @@ $(window).scroll(function() {
         // console.log(data);
         if (data.form_is_valid) {
 
-          $("#room-table tbody").html(data.html_room_list); 
+          $("#room-table tbody").prepend(data.html_room); 
           $("#modal-room").modal("hide");          
           
           console.log(data);
@@ -70,13 +70,61 @@ $(window).scroll(function() {
   };
 
 
+  var deleteRoom = function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+
+          $('#'+data.room_id).hide();
+          $("#modal-room").modal("hide");          
+          
+          console.log(data);
+        }
+        else {
+          $("#modal-room .modal-content").html(data.html_form);
+          
+        }
+      }
+    });
+    return false;
+  };
+
+  var updateRoom = function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          
+          $('#'+data.room_id).replaceWith(data.html_room);
+          $("#modal-room").modal("hide");          
+          
+          console.log(data);
+        }
+        else {
+          $("#modal-room .modal-content").html(data.html_form);
+          
+        }
+      }
+    });
+    return false;
+  };
+
   $(".js-create-room").click(loadForm);
   $("#modal-room").on("submit", ".js-room-create-form", saveForm);
  
 
   $("#room-table").on("click", ".js-update-room", loadForm);
-  $("#modal-room").on("submit", ".js-room-update-form", saveForm);
+  $("#modal-room").on("submit", ".js-room-update-form", updateRoom);
 
   $("#room-table").on("click", ".js-delete-room", loadForm);
-  $("#modal-room").on("submit", ".js-room-delete-form", saveForm);
+  $("#modal-room").on("submit", ".js-room-delete-form", deleteRoom);
 });

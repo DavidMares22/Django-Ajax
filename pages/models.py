@@ -14,7 +14,8 @@ class  Room(models.Model):
     nobeds = models.IntegerField(blank=True, null=True)
     room_type = models.PositiveSmallIntegerField(choices=ROOM_TYPES)
 
-
+    class Meta:
+        ordering = ['-id']   
 
 class Post(models.Model):
     content = models.CharField(max_length=200)
