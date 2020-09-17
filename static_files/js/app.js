@@ -11,19 +11,28 @@ var block_request = false;
 
 $(window).scroll(function() {
   var margin = $(document).height() - $(window).height() - 50;
+  
   if($(window).scrollTop() > margin && empty_page == false && block_request == false) {
-  block_request = true;
-  page += 1;
-  $.get('?page=' + page, function(data) {
-  if(data == '') {
-  empty_page = true;
-  console.log('emptyyyy')
-  }
-  else {
-  block_request = false;
-  $("#room-table tbody").append(data);
-  }
-  });
+      block_request = true;
+      page += 1;
+      $.ajax({
+        url: '?page=' + page,
+        type: 'get',
+        dataType: 'html',
+       
+        success: function (data) {
+          if(data == '') {
+            empty_page = true;
+            console.log('vacio')
+            }
+            else {
+            block_request = false;
+            $("#room-table tbody").append(data);
+            }
+          
+        }
+      });
+     
   }
   });
 

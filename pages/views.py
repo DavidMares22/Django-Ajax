@@ -52,7 +52,10 @@ def create_post(request):
 
         post = Post(content=post_text)
         post.save()
-        object_list = Post.objects.all()
+        posts = Post.objects.all()
+        page_number = request.GET.get('page')
+        paginator = Paginator(posts, 3)
+        object_list = paginator.get_page(page_number)        
 
         data['html_post_list'] = render_to_string('pages/includes/post_list.html', {
                 'object_list': object_list
