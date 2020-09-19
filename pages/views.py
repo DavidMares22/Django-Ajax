@@ -138,7 +138,7 @@ def signin(request):
 def index(request):
     rooms = Room.objects.all()
     page_number = request.GET.get('page')
-    paginator = Paginator(rooms, 7)
+    paginator = Paginator(rooms, 6)
     try:
         object_list = paginator.page(page_number)
     except PageNotAnInteger:
@@ -205,6 +205,7 @@ def update_room_form(request, form, template_name,room_id):
 def RoomUpdate(request, room_id):
     room = get_object_or_404(Room, pk = room_id)
     if request.method == 'POST':
+        print(request.POST)
         form = RoomForm(request.POST, instance=room)
     else:
         form = RoomForm(instance=room)

@@ -8,11 +8,16 @@ $(function () {
 var page = 1;
 var empty_page = false;
 var block_request = false;
+$("#loading").hide();
 
-$(window).scroll(function() {
-  var margin = $(document).height() - $(window).height() - 50;
+
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
   
-  if($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+  
+
+  if((window.innerHeight + window.scrollY) >= document.body.scrollHeight && empty_page == false && block_request == false) {
       block_request = true;
       page += 1;
       $.ajax({
@@ -26,15 +31,21 @@ $(window).scroll(function() {
             console.log('vacio')
             }
             else {
-            block_request = false;
-            $("#room-table tbody").append(data);
+            
+            $("#loading").show();
+            setTimeout(function(){
+              $("#loading").hide();
+              $("#room-table tbody").append(data);
+              block_request = false;
+           }, 2000);
+            
             }
           
         }
       });
      
   }
-  });
+  }
 
   
   var loadForm = function () {
@@ -61,13 +72,12 @@ $(window).scroll(function() {
       type: form.attr("method"),
       dataType: 'json',
       success: function (data) {
-        // console.log(data);
+        
         if (data.form_is_valid) {
 
           $("#room-table tbody").prepend(data.html_room); 
           $("#modal-room").modal("hide");          
-          
-          console.log(data);
+    
         }
         else {
           $("#modal-room .modal-content").html(data.html_form);
@@ -105,6 +115,7 @@ $(window).scroll(function() {
 
   var updateRoom = function () {
     var form = $(this);
+    console.log(form.serialize())
     $.ajax({
       url: form.attr("action"),
       data: form.serialize(),
@@ -115,11 +126,12 @@ $(window).scroll(function() {
           
           $('#'+data.room_id).replaceWith(data.html_room);
           $("#modal-room").modal("hide");          
-          
-          console.log(data);
+       
         }
         else {
           $("#modal-room .modal-content").html(data.html_form);
+             
+          console.log(data);
           
         }
       }

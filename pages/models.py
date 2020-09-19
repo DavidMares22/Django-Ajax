@@ -17,6 +17,9 @@ class  Room(models.Model):
     class Meta:
         ordering = ['-id']   
 
+    def __str__(self):
+        return str(self.name)
+
 class Post(models.Model):
     content = models.CharField(max_length=200)
     liked = models.ManyToManyField(User,blank=True)
