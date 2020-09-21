@@ -1,0 +1,23 @@
+
+.navbar .nav-item {
+    font-size: 1.1rem;    
+}
+
+.navbar {
+    position: relative;
+}
+.navbar-brand {
+    
+    position: absolute;
+    left: 50%;
+    margin-left: -50px !important;  /* 50% of your logo width */
+    display: block;
+}
+.navbar-text{
+    font-size: 1.1rem;
+}
+
+footer{
+    font-size: 1.3rem;
+    
+}

@@ -4,15 +4,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Penplas</title>
+  <title>Ajax & Django</title>
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
   <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  
   
 </head>
 
 <body class = "d-flex flex-column min-vh-100">
-  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark py-4">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'pages:index' %}">Penpals</a>
+      <a class="navbar-brand" href="{% url 'pages:index' %}">
+        <h4>Ajax & Django</h4>
+      </a>
+
+     {% if user.is_authenticated %}
+          <span class="navbar-text">
+            Welcome, {{user.username}} 
+          </span>
+      {% endif %}
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -21,20 +32,20 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav ml-auto">
 
-          {% if user.is_authenticated %}
-          <span class="navbar-text">
-            Welcome, {{user.username}} 
-          </span>
+         
           
-          <li class="nav-item">
-                  <a class="nav-link" href="{% url 'pages:logout' %}">Logout</a>
-              </li>
-          {% else %}
+         
+          {% if not user.is_authenticated %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'pages:signup' %}">Sign up</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'pages:signin' %}">Sign in</a>
+              </li>
+            
+            {% else %}
+             <li class="nav-item">
+                  <a class="nav-link" href="{% url 'pages:logout' %}">Logout</a>
               </li>
             {% endif %}
             
@@ -77,9 +88,9 @@
 
 
  
-  <footer class="bg-dark text-white mt-auto">
-    <div class="container-fluid py-4">
-      <p class=" text-center ">Copyright &copy; Penpals 2020</p>
+  <footer class="bg-dark text-white mt-auto  text-center py-5">
+    <div class="container ">
+      <span>Ajax & Django</span>
     </div>
   </footer>
 
