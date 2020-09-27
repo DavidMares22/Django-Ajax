@@ -3,48 +3,40 @@
   
 $(function () {
 
+  var page = 1;
+  var empty_page = false;
+  var block_request = false;
+  $("#loading").hide();
 
 
-var page = 1;
-var empty_page = false;
-var block_request = false;
-$("#loading").hide();
+window.onscroll = function(){infiniteScroll()};
 
-
-window.onscroll = function() {myFunction()};
-
-function myFunction() {
-  
-  
-
+function infiniteScroll() {
   if((window.innerHeight + window.scrollY) >= document.body.scrollHeight && empty_page == false && block_request == false) {
       block_request = true;
       page += 1;
       $.ajax({
-        url: '?page=' + page,
-        type: 'get',
-        dataType: 'html',
-       
-        success: function (data) {
-          if(data == '') {
-            empty_page = true;
-            console.log('vacio')
-            }
-            else {
-            
-            $("#loading").show();
-            setTimeout(function(){
-              $("#loading").hide();
-              $("#room-table tbody").append(data);
-              block_request = false;
-           }, 2000);
-            
-            }
-          
-        }
+          url: '?page=' + page,
+          type: 'get',
+          dataType: 'html',
+        
+          success: function (data) {
+            if(data == '') {
+              empty_page = true;
+              console.log('no more posts!')
+              }
+              else {
+              
+                $("#loading").show();
+                setTimeout(function(){
+                  $("#loading").hide();
+                  $("#room-table tbody").append(data);
+                  block_request = false;
+                }, 2000);
+              }
+          }
       });
-     
-  }
+    }
   }
 
   

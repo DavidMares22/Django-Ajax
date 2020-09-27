@@ -29,15 +29,10 @@
 
 <div class="col-sm-9">
 
-<form action="{% url 'pages:create_post' %}" method="POST" autocomplete="off" id="post-form">
-    {% csrf_token %}
-    <div class="input-group mb-3 ">
-        {% for field in form %}
-        {{ field }}
-        {% endfor %}        
-        <button type="submit" class="  btn btn-outline-primary">Send</button>
-    </div>
-</form>
+<div class="post-form">
+    
+    {% include 'pages/includes/create_post.html' %}
+</div>
 
 
 

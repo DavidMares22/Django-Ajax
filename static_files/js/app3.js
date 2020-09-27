@@ -95,25 +95,36 @@ $(function () {
    });
  
  
-  // Submit post on submit
-$('#post-form').on('submit', function(event){
+$(".post-form").on("submit",'#form-post', function(event){
+
 
   event.preventDefault();
   var form = $(this);
+  
 
   $.ajax({
     url : form.attr("action"),
     type : "POST", // http method
-    data : { the_post : $('#post-content').val(), 
-          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()}, // data sent with the post request
+    data :form.serialize(),
+          
 
     // handle a successful response
     success : function(data) {
-        $('#post-content').val(''); // remove the value from the input
+        
        
-        $('#posts').html(data.html_post_list); 
+        
 
-        console.log(data)
+        if (data.form_is_valid) {
+          $(".post-form").html(data.html_form);
+          $('#posts').html(data.html_post_list);       
+    
+        }
+        else {
+          $(".post-form").html(data.html_form);
+          
+        }
+
+        $('#post-content').val(''); 
 
     },
 
@@ -126,6 +137,8 @@ $('#post-form').on('submit', function(event){
           ); // provide a bit more info about the error to the console
     }
 });
+
+ 
 });
 
 
@@ -141,7 +154,7 @@ $('#posts').on('click','.page-link',function(){
   dataType: 'html',
   success: function (data) {
  
-
+    
     $('#posts').html(data); 
     
  

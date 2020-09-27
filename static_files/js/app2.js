@@ -1,7 +1,7 @@
 $("#id_username").keyup(function (e) {
 
   var code = (e.keyCode || e.which);
-  if(code == 37 || code == 38 || code == 39 || code == 40) {
+  if(code == 37 || code == 38 || code == 39 || code == 40 || code == 32) {
     console.log(code);
     return;
   }
@@ -10,7 +10,7 @@ $("#id_username").keyup(function (e) {
 
   var username = $(this).val();
 
-  if( !username) {
+  if(username.trim() === '') {
     $('#id_username').removeClass('is-valid');
     $('#id_username').removeClass('is-invalid');
     $('#usernameError').remove();
@@ -24,20 +24,18 @@ $("#id_username").keyup(function (e) {
     },
     dataType: 'json',
     success: function (data) {
-      if (data.is_taken) {
-  
-        $('#id_username').removeClass('is-valid').addClass('is-invalid');
+        if (data.is_taken) {
+    
+          $('#id_username').removeClass('is-valid').addClass('is-invalid');
 
-        if($('#usernameError').length === 0){
-          $('#id_username').after('<div class="invalid-feedback d-block" id="usernameError">This username is not available!</div>');
-          }         
-        
+          if($('#usernameError').length === 0){
+            $('#id_username').after('<div class="invalid-feedback d-block" id="usernameError">This username is not available!</div>');
+            }         
+        }else {
+          $('#id_username').removeClass('is-invalid').addClass('is-valid');
+          $('#usernameError').remove();
 
-      }else {
-        $('#id_username').removeClass('is-invalid').addClass('is-valid');
-        $('#usernameError').remove();
-
-    }
+      }
     }
   });
 

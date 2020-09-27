@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 
 class PostForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','id':'post-content','placeholder': 'Post text...'}))
+    content = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','id':'post-content','placeholder': 'Post text...'}),required=True)
     class Meta:
         model = Post
         fields = ['content']

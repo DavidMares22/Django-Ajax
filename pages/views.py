@@ -47,11 +47,17 @@ def pages(request):
 
 def create_post(request):
     if request.method == 'POST':
-        post_text = request.POST.get('the_post')
+        form = PostForm(request.POST)
         data = {}
-
-        post = Post(content=post_text)
-        post.save()
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+        
+        context = {'form': form}
+        data['html_form'] = render_to_string('pages/includes/create_post.html', context, request=request)            
+        
         posts = Post.objects.all()
         page_number = request.GET.get('page')
         paginator = Paginator(posts, 3)
@@ -61,7 +67,8 @@ def create_post(request):
                 'object_list': object_list
             },request = request)
         
-
+       
+    
         return JsonResponse(data)
  
     else:
