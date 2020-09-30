@@ -10,7 +10,7 @@
     
     position: absolute;
     left: 50%;
-    margin-left: -50px !important;  /* 50% of your logo width */
+    margin-left: -50px !important;  
     display: block;
 }
 .navbar-text{
@@ -20,4 +20,8 @@
 footer{
     font-size: 1.3rem;
     
+}
+
+.errorlist{
+    color: red;
 }
