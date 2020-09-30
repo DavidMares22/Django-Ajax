@@ -1,12 +1,16 @@
 <form action="{% url 'pages:create_post' %}" method="POST" autocomplete="off" id="form-post">
     {% csrf_token %}
+    {% for field in form %}
+
     <div class="input-group mb-3 ">
-        {% for field in form %}
+        
         {{ field }}
-        {% for error in field.errors %}
-              <p style="color: red">{{ error }}</p>
-            {% endfor %}
-        {% endfor %}        
+        
+              
         <button type="submit" class="  btn btn-outline-primary">Send</button>
     </div>
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+    {% endfor %}  
 </form>
